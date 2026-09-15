@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For Manja 💗</title>
+<meta name="description" content="A little surprise from Ilyasa to Manja.">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700&display=swap');
+
+:root{
+  --pink:#ff7da8;
+  --pink2:#ffb6ca;
+  --rose:#f35d8d;
+  --cream:#fff8f4;
+  --ink:#432d36;
+  --muted:#866d77;
+  --paper:#fffdfb;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  min-height:100vh;
+  background:#110b12;
+  color:white;
+  font-family:"DM Sans",sans-serif;
+  overflow-x:hidden;
+}
+body.opened{overflow:auto}
+.stars,.hearts{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:0}
+.star{
+  position:absolute;width:2px;height:2px;background:#fff;border-radius:50%;
+  opacity:.45;animation:twinkle 3s infinite ease-in-out;
+}
+@keyframes twinkle{50%{opacity:.12;transform:scale(.55)}}
+.bg-glow{
+  position:fixed;inset:0;pointer-events:none;
+  background:
+    radial-gradient(circle at 50% 40%,rgba(255,105,160,.16),transparent 32%),
+    radial-gradient(circle at 15% 85%,rgba(177,90,255,.12),transparent 28%),
+    radial-gradient(circle at 90% 10%,rgba(255,164,205,.09),transparent 25%);
+  z-index:0;
+}
+.screen{
+  min-height:100svh;display:flex;align-items:center;justify-content:center;
+  position:relative;z-index:1;padding:28px;
+}
+.intro{text-align:center;max-width:760px}
+.kicker{letter-spacing:.22em;text-transform:uppercase;font-size:.72rem;color:#e7b5c7;margin-bottom:16px}
+h1{
+  font-family:"Cormorant Garamond",serif;font-size:clamp(3rem,8vw,6.5rem);
+  line-height:.9;margin:0 0 18px;font-weight:600;
+  text-shadow:0 0 35px rgba(255,112,165,.25);
+}
+.intro p{color:#cbb7c0;font-size:1rem;margin:0 auto 28px;line-height:1.7}
+.envelope-wrap{width:min(390px,82vw);margin:18px auto 26px;cursor:pointer;position:relative;filter:drop-shadow(0 28px 35px rgba(0,0,0,.45))}
+.envelope{
+  position:relative;width:100%;aspect-ratio:1.55/1;
+  transform-style:preserve-3d;transition:transform .9s cubic-bezier(.2,.75,.2,1);
+}
+.env-body{
+  position:absolute;inset:0;border-radius:12px;
+  background:linear-gradient(145deg,#ffdce8,#ffb5ca);
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.5),0 0 0 1px rgba(255,125,168,.15);
+  overflow:hidden;
+}
+.env-body:before,.env-body:after{
+  content:"";position:absolute;bottom:0;width:70%;height:100%;
+  background:rgba(245,91,139,.18);
+}
+.env-body:before{left:-28%;clip-path:polygon(0 100%,100% 100%,100% 0)}
+.env-body:after{right:-28%;clip-path:polygon(0 100%,100% 100%,0 0)}
+.flap{
+  position:absolute;left:0;top:0;width:100%;height:60%;
+  background:linear-gradient(160deg,#ffe9f0,#ffb2c8);
+  clip-path:polygon(0 0,100% 0,50% 100%);
+  transform-origin:50% 0;transition:transform 1s cubic-bezier(.2,.75,.2,1);
+  z-index:5;filter:drop-shadow(0 2px 2px rgba(100,30,55,.08));
+}
+.letter-peek{
+  position:absolute;left:9%;width:82%;height:80%;top:11%;
+  background:var(--paper);border-radius:8px;z-index:2;
+  transition:transform 1s cubic-bezier(.2,.75,.2,1);
+  box-shadow:0 5px 18px rgba(90,25,50,.16);
+}
+.seal{
+  position:absolute;left:50%;top:48%;transform:translate(-50%,-50%);
+  width:62px;height:62px;border-radius:50%;background:#d94f7e;color:white;
+  display:grid;place-items:center;font-size:1.5rem;z-index:8;
+  box-shadow:0 7px 18px rgba(110,30,60,.22);
+  transition:opacity .4s,transform .4s;
+}
+.envelope-wrap:hover .envelope{transform:translateY(-7px) rotate(-.6deg)}
+.envelope.open .flap{transform:rotateX(180deg)}
+.envelope.open .letter-peek{transform:translateY(-35%)}
+.envelope.open .seal{opacity:0;transform:translate(-50%,-50%) scale(.5)}
+.open-btn{
+  border:0;border-radius:999px;padding:15px 25px;background:linear-gradient(135deg,#ff7ca7,#f05288);
+  color:white;font-weight:700;letter-spacing:.03em;cursor:pointer;
+  box-shadow:0 12px 30px rgba(239,82,136,.22);transition:.25s;
+}
+.open-btn:hover{transform:translateY(-2px);box-shadow:0 16px 35px rgba(239,82,136,.3)}
+.hint{font-size:.75rem;color:#a98d98;margin-top:12px}
+
+#letter-section{display:none;position:relative;z-index:2;padding:70px 18px 90px}
+#letter-section.show{display:block;animation:fadeUp 1s ease both}
+@keyframes fadeUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:none}}
+.letter-shell{max-width:860px;margin:auto}
+.letter-card{
+  color:var(--ink);background:var(--paper);border-radius:18px;
+  padding:clamp(28px,6vw,70px);position:relative;
+  box-shadow:0 30px 90px rgba(0,0,0,.38);
+}
+.paper-line{height:1px;background:#efdfe4;margin:24px 0 35px}
+.letter-top{text-align:center}
+.letter-top .tiny{font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;color:#ba8498}
+.letter-top h2{font-family:"Cormorant Garamond",serif;font-size:clamp(2.8rem,7vw,5rem);line-height:.9;margin:14px 0 5px;color:#542d3d}
+.letter-top p{color:#a47787;margin:0}
+.letter-body{font-family:"Cormorant Garamond",serif;font-size:1.25rem;line-height:1.68}
+.letter-body p{margin:0 0 22px}
+.letter-body .big{
+  font-size:clamp(1.55rem,4vw,2.15rem);line-height:1.15;
+  text-align:center;font-weight:700;color:#d24f7e;margin:34px 0;
+}
+.letter-body .center{text-align:center}
+.letter-body .soft{color:#86606e}
+.letter-body .promise{
+  margin:34px 0;padding:25px 22px;border-radius:15px;
+  background:#fff1f5;border:1px solid #f6d5df;text-align:center;
+}
+.promise strong{display:block;color:#c43f70;font-size:1.35em;margin:5px 0}
+.signature{text-align:center;margin-top:40px}
+.signature .forever{font-size:1rem;color:#a47787;font-family:"DM Sans",sans-serif}
+.signature .name{font-family:"Cormorant Garamond",serif;font-size:2.8rem;font-weight:700;color:#c84272}
+.end-card{text-align:center;padding-top:42px}
+.close-btn{
+  border:1px solid #f1c4d2;background:#fff;color:#c84272;border-radius:999px;
+  padding:12px 19px;font-weight:700;cursor:pointer;
+}
+.footer-note{text-align:center;color:#8e7480;font-size:.78rem;margin-top:18px}
+.heart{
+  position:absolute;font-size:18px;animation:float 5s linear forwards;opacity:0;
+}
+@keyframes float{
+  0%{opacity:0;transform:translateY(30px) scale(.7) rotate(0)}
+  15%{opacity:.85}100%{opacity:0;transform:translateY(-90vh) scale(1.15) rotate(25deg)}
+}
+
+#secret-section{
+  display:none;position:fixed;inset:0;z-index:50;
+  align-items:center;justify-content:center;padding:25px;
+  background:
+    radial-gradient(circle at 50% 35%,rgba(255,111,165,.22),transparent 28%),
+    radial-gradient(circle at 20% 90%,rgba(160,85,240,.13),transparent 28%),
+    #100a11;
+  text-align:center;overflow:hidden;
+}
+#secret-section.show{display:flex;animation:secretFade .9s ease both}
+@keyframes secretFade{from{opacity:0}to{opacity:1}}
+.secret-inner{max-width:720px;position:relative}
+.secret-kicker{
+  color:#d6a6b9;text-transform:uppercase;letter-spacing:.25em;
+  font-size:.68rem;margin-bottom:28px;opacity:.9;
+}
+.secret-heart{
+  font-family:"Cormorant Garamond",serif;font-size:5.5rem;line-height:.7;
+  color:#ff8eb2;text-shadow:0 0 35px rgba(255,110,165,.5);
+  animation:heartPulse 1.5s ease-in-out infinite;
+}
+@keyframes heartPulse{50%{transform:scale(1.12);text-shadow:0 0 55px rgba(255,110,165,.7)}}
+.secret-inner h2{
+  font-family:"Cormorant Garamond",serif;font-size:clamp(2.8rem,8vw,5.5rem);
+  line-height:.9;margin:22px 0 18px;color:#fff;font-weight:600;
+}
+.secret-main{
+  color:#d7c2cb;font-size:1.1rem;line-height:1.7;margin:0;
+}
+.secret-main span{color:#ff9fbc}
+.secret-divider{color:#ff8eb2;margin:30px 0;font-size:1.2rem;letter-spacing:.5em}
+.secret-message{
+  color:#fff;font-family:"Cormorant Garamond",serif;
+  font-size:clamp(1.5rem,4vw,2.2rem);line-height:1.3;margin:0 0 18px;
+}
+.secret-message strong{color:#ff9fbc}
+.secret-message.small{font-size:1.2rem;color:#cdb7c0}
+.hug{font-size:4rem;margin:12px 0 3px;animation:hugBounce 1.7s ease-in-out infinite}
+@keyframes hugBounce{50%{transform:translateY(-7px) scale(1.04)}}
+.secret-hug{color:#d7c2cb;margin:0 0 20px}
+.secret-mwah{
+  color:#ff9fbc;font-family:"Cormorant Garamond",serif;
+  font-size:1.8rem;font-weight:700;margin-bottom:30px;
+}
+.secret-close{
+  border:1px solid rgba(255,168,194,.4);border-radius:999px;
+  background:rgba(255,255,255,.06);color:#fff;padding:13px 22px;
+  cursor:pointer;font-weight:700;transition:.25s;
+  backdrop-filter:blur(8px);
+}
+.secret-close:hover{transform:translateY(-2px);background:rgba(255,255,255,.11)}
+
+@media(max-width:600px){
+  .screen{padding:22px}
+  .letter-body{font-size:1.17rem}
+  .letter-card{border-radius:14px}
+  .secret-inner h2{font-size:3.25rem}
+  .secret-message{font-size:1.55rem}
+
+}
+</style>
+</head>
+<body>
+<div class="bg-glow"></div>
+<div class="stars" id="stars"></div>
+<div class="hearts" id="hearts"></div>
+
+<section class="screen" id="intro">
+  <div class="intro">
+    <div class="kicker">A little surprise from your hubby 🤍</div>
+    <h1>Open me,<br>Manjaaa... 💗</h1>
+    <p>There is something inside this little box that I really, really wanted you to read. 🥺</p>
+
+    <div class="envelope-wrap" id="envelopeWrap" aria-label="Open the envelope">
+      <div class="envelope" id="envelope">
+        <div class="env-body"></div>
+        <div class="letter-peek"></div>
+        <div class="flap"></div>
+        <div class="seal">♥</div>
+      </div>
+    </div>
+
+    <button class="open-btn" id="openBtn">💌 OPEN ME, MANJAAA...</button>
+    <div class="hint">click the envelope, sayanggg 🥺</div>
+  </div>
+</section>
+
+<section id="letter-section">
+  <div class="letter-shell">
+    <article class="letter-card">
+      <div class="letter-top">
+        <div class="tiny">A letter for my princess 👑</div>
+        <h2>Manjaaa....</h2>
+        <p>Hi awakkk 🤍</p>
+      </div>
+      <div class="paper-line"></div>
+
+      <div class="letter-body">
+        <p>Yesterday was our first little argument, and honestly... it made me do a lot of reflecting today while I was at work. I couldn't really stop thinking about it. 😔</p>
+
+        <p>It even got to me so much that my ego became high and I didn't want to text you first... BUTTT I threw that ego away because I realised I can't go through my day without being the hubby I am and the gentleman who gives you the good morning text you deserve. 🥹❤️</p>
+
+        <p>I want you to finish school, open your phone, see my message and smile because you know I'll always be there to greet you. ☀️💗</p>
+
+        <p>But yeah... I just want us to promise each other something. If arguments happen in the future, let's fix them <strong>together</strong>. We can sit down, text, call, whatever works... as long as we don't let something small become something big enough to make either one of us sad. 🥺</p>
+
+        <p class="big">I've decided to love you and stay with you through <strong>thick and thin.</strong> ❤️</p>
+
+        <p>And I'm sorry if some of my texts sounded empty or cold when I was angry or pissed. I know I can become colder when my emotions get to me. But once things calm down, I'll always come back to being your gentle and loveable hubby again, okay? 🥺🤍</p>
+
+        <p>Alsoooo today... please don't throw tantrums at me saying things like <strong>"ihy", "go away", "don't piss me off"</strong> and all that 😭</p>
+
+        <p>Because behind this screen, I was actually so sad... :(</p>
+
+        <p>I may look tough and all like the man I am 😤💪 but once I love someone, I'm vulnerable to that person. <strong>Jangan buang tantrum kat i pls...</strong> 🥺 You can use me as your physical punching bag HAHAHA 😭, you can rant to me, complain to me, tell me everything...</p>
+
+        <p><strong>But jangan guna words at me macam tu :( sygggg tak sukaaa...</strong> 🥺💔</p>
+
+        <p>It makes me overthink so much. I was honestly about to give you space for the whole day because I thought maybe that's what you needed.</p>
+
+        <p>But the truth is... <strong>I love you, and I'll be really sad if I ever lost you.</strong> 🥺❤️</p>
+
+        <p>Andddd one more thing 😭👉👈</p>
+
+        <p>Can you please use <strong>"ilyasa"</strong> instead of <strong>"ilys"</strong> or <strong>"ily"</strong> sometimes when you post something? BAHAHAHA because my brain will start thinking, <em>"OH she means I love yousss 🥹"</em> when actually it's just <em>my name ishhh</em> 😭😂</p>
+
+        <p>I love you, darling. ❤️</p>
+
+        <p>I think about you every single day. I always wonder how your day went, what you're doing, what you're thinking about and everything in between. It's crazy how our hearts can somehow reach one another even with all this distance between us. 🥺🌎❤️</p>
+
+        <p>And I really hope you feel the same way.</p>
+
+        <p>Gotta thank technology for this... because without it, I don't even know what I'd be doing right now HAHAHA 😭📱💕</p>
+
+        <p>I'm so lucky to have met a princess like you. 👑💗</p>
+
+        <p>I'm not perfect. I know that. But I'll always try my best to take good care of you and be the <strong>biggerman</strong> who throws his ego away just to wipe that sad face and that <strong>muka burukkk bila marahhh</strong> away... and replace it with that beautiful, heartful smile instead. 🥹❤️</p>
+
+        <div class="promise">
+          <div>So let's promise each other this:</div>
+          <strong>When we have an argument, we fix it together. 🤝🏻💗</strong>
+          <div>It's not about <strong>you vs me.</strong></div>
+          <strong>It's both of us vs the problem. 🫶🏻</strong>
+        </div>
+
+        <p>I also really appreciate how you respect me when I ask you to block someone I don't like. You don't hesitate to do it, and honestly, that means a lot to me. 🥺❤️</p>
+
+        <p>And I want you to know something about me too...</p>
+
+        <p>When I'm pissed or angry, I might give colder replies, and my voice during calls might become a little colder too. That's usually just my jealousy and emotions hitting me. 😭</p>
+
+        <p class="big">But I promise you one thing:<br><strong>I will never raise my voice at my woman. 🤍</strong></p>
+
+        <p>You are my world. 🌎❤️</p>
+
+        <p>You're where my peace revolves around, and I want to explore this world with you one day... and hopefully with our future baby too. 🥹👶🏻❤️</p>
+
+        <p>Ni dah malam dahhh, awak jangan tidur lambat-lambat okayyy!! 😤💗</p>
+
+        <p><strong>Esok sekolahhh! 📚😭</strong></p>
+
+        <p>I love you, my princess. 👑❤️</p>
+
+        <p>Goodnight, sayanggg. 🌙✨</p>
+
+        <p>I'll try my best to dream of you tonight!!!!</p>
+
+        <p class="big">WITHOUT AWAS OF COURSE ISHHHH 😭😂</p>
+
+        <p>I miss you a lot today. :( ❤️</p>
+
+        <p>I really needed a big hug from you today... I was sad about us, and work was keeping me so busy too. Haissss 😭🥺</p>
+
+        <p>Anyways...</p>
+
+        <p class="center"><strong>Awak nak tau takkk?? 👀🤭</strong></p>
+
+        <p class="center soft"><em>*whispers...*</em></p>
+
+        <p class="big">🤫 "Ilyasa sayangggg sangat dengan Manjaaaa!! Jangan bagi tauuu siapa-siapa heheeheee 🤭❤️"</p>
+
+        <p class="center">Mwahhhhh 💋💋💋</p>
+
+        <p class="big">Sayanggg Manja sangattt. 🥺❤️</p>
+
+        <div class="signature">
+          <div class="forever">Forever your hubby,</div>
+          <div class="name">Ilyasa 🤍</div>
+        </div>
+      </div>
+
+      <div class="end-card">
+        <div>🎁 <strong>Now close the box and smile for me, princess.</strong> 👑💗</div>
+        <br>
+        <button class="close-btn" id="closeBtn">Close the letter 💌</button>
+        <div class="footer-note">Made with way too much love. 🤍</div>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- SECRET ENDING -->
+<section id="secret-section" aria-hidden="true">
+  <div class="secret-inner">
+    <div class="secret-kicker">pssst... wait, Manja 👀</div>
+    <div class="secret-heart">♡</div>
+    <h2>You thought that was all? 🤭</h2>
+    <p class="secret-main">I have <span>one more thing</span> to tell you.</p>
+    <div class="secret-divider">✦</div>
+    <p class="secret-message">
+      No matter how many little arguments we have,<br>
+      <strong>I'm still choosing you.</strong> 🥺❤️
+    </p>
+    <p class="secret-message small">
+      Ilyasa sayangggg sangat dengan Manjaaaa.<br>
+      Always. 🤍
+    </p>
+    <div class="hug">🫂</div>
+    <p class="secret-hug">Now come here and give your hubby a hug.</p>
+    <div class="secret-mwah">MWAHHHH 💋💋💋</div>
+    <button class="secret-close" id="secretClose">Okayyy hubby 🥺❤️</button>
+  </div>
+</section>
+
+<script>
+const stars = document.getElementById('stars');
+for(let i=0;i<90;i++){
+  const s=document.createElement('span');
+  s.className='star';
+  s.style.left=Math.random()*100+'%';
+  s.style.top=Math.random()*100+'%';
+  s.style.animationDelay=(Math.random()*3)+'s';
+  s.style.animationDuration=(2+Math.random()*4)+'s';
+  stars.appendChild(s);
+}
+
+const envelope=document.getElementById('envelope');
+const wrap=document.getElementById('envelopeWrap');
+const openBtn=document.getElementById('openBtn');
+const intro=document.getElementById('intro');
+const letter=document.getElementById('letter-section');
+const hearts=document.getElementById('hearts');
+const closeBtn=document.getElementById('closeBtn');
+
+function burstHearts(){
+  for(let i=0;i<28;i++){
+    const h=document.createElement('span');
+    h.className='heart';
+    h.textContent=['♥','♡','💗','💖','✨'][Math.floor(Math.random()*5)];
+    h.style.left=(10+Math.random()*80)+'%';
+    h.style.top=(55+Math.random()*30)+'%';
+    h.style.fontSize=(12+Math.random()*22)+'px';
+    h.style.animationDuration=(3.5+Math.random()*3)+'s';
+    h.style.animationDelay=(Math.random()*.8)+'s';
+    hearts.appendChild(h);
+    setTimeout(()=>h.remove(),7000);
+  }
+}
+
+function openLetter(){
+  if(envelope.classList.contains('open')) return;
+  envelope.classList.add('open');
+  burstHearts();
+  setTimeout(()=>{
+    intro.style.display='none';
+    letter.classList.add('show');
+    document.body.classList.add('opened');
+    window.scrollTo({top:0,behavior:'smooth'});
+    burstHearts();
+  },1200);
+}
+wrap.addEventListener('click',openLetter);
+openBtn.addEventListener('click',openLetter);
+
+const secret = document.getElementById('secret-section');
+const secretClose = document.getElementById('secretClose');
+
+closeBtn.addEventListener('click',()=>{
+  letter.classList.remove('show');
+  secret.classList.add('show');
+  secret.setAttribute('aria-hidden','false');
+  burstHearts();
+});
+
+secretClose.addEventListener('click',()=>{
+  secret.classList.remove('show');
+  secret.setAttribute('aria-hidden','true');
+  document.body.classList.remove('opened');
+  intro.style.display='flex';
+  envelope.classList.remove('open');
+  window.scrollTo({top:0,behavior:'smooth'});
+});
+
+document.addEventListener('keydown',e=>{
+  if(e.key==='Enter' && intro.style.display!=='none') openLetter();
+});
+</script>
+</body>
+</html>
